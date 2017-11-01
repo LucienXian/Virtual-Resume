@@ -30,4 +30,17 @@
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="vertex.vs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="fragment.fs">
+      <Filter>源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="container.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

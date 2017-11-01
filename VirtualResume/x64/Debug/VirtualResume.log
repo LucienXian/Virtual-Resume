@@ -1,4 +1,3 @@
 ﻿  main.cpp
-cl : 命令行 warning D9028: 最小重新生成失败，正在转换为标准生成
   VirtualResume.vcxproj -> E:\Coding\SRTP\VirtualResume\x64\Debug\VirtualResume.exe
   VirtualResume.vcxproj -> E:\Coding\SRTP\VirtualResume\x64\Debug\VirtualResume.pdb (Partial PDB)
