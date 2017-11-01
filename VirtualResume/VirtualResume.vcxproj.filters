@@ -42,5 +42,32 @@
     <Image Include="container.jpg">
       <Filter>资源文件</Filter>
     </Image>
+    <Image Include="resume\1.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resume\2.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resume\3.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resume\4.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resume\5.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resume\6.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resume\7.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resume\8.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="resume\9.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>

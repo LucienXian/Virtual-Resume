@@ -52,10 +52,10 @@ int main()
 
 	GLfloat vertices[] = {
 		//     ---- 位置 --     - 纹理坐标 -
-		0.5f,  0.5f, 0.0f,    1.0f, 1.0f,   // 右上
-		0.5f, -0.5f, 0.0f,    1.0f, 0.0f,   // 右下
-		-0.5f, -0.5f, 0.0f,    0.0f, 0.0f,   // 左下
-		-0.5f,  0.5f, 0.0f,    0.0f, 1.0f    // 左上
+		0.6f,  0.6f, 0.2f,    1.0f, 1.0f,   // 右上
+		0.6f, -0.6f, 0.0f,    1.0f, 0.0f,   // 右下
+		-0.6f, -0.6f, 0.0f,    0.0f, 0.0f,   // 左下
+		-0.6f,  0.6f, 0.0f,    0.0f, 1.0f    // 左上
 	};
 
 	unsigned int indices[] = { // 注意索引从0开始! 
@@ -100,7 +100,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	int width, height, nrChannels;
-	unsigned char *data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
+	unsigned char *data = stbi_load("resume/1.jpg", &width, &height, &nrChannels, 0);
 	if (data)
 	{
 		
