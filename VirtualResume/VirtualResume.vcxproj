@@ -130,9 +130,9 @@
   <ItemGroup>
     <Image Include="container.jpg" />
     <Image Include="resume\1.jpg" />
-    <Image Include="resume\2.png" />
+    <Image Include="resume\2.jpg" />
     <Image Include="resume\3.jpg" />
-    <Image Include="resume\4.png" />
+    <Image Include="resume\4.jpg" />
     <Image Include="resume\5.jpg" />
     <Image Include="resume\6.jpg" />
     <Image Include="resume\7.jpg" />
