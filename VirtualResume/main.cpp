@@ -78,10 +78,10 @@ int main()
 
 	GLfloat vertices[] = {
 		//     ---- 位置 --     - 纹理坐标 -
-		0.6f,  0.6f, 0.0f,    1.0f, 1.0f,   // 右上
-		0.6f, -0.6f, 0.0f,    1.0f, 0.0f,   // 右下
-		-0.6f, -0.6f, 0.0f,    0.0f, 0.0f,   // 左下
-		-0.6f,  0.6f, 0.0f,    0.0f, 1.0f    // 左上
+		1.2f,  1.2f, 0.0f,    1.0f, 1.0f,   // 右上
+		1.2f, -1.2f, 0.0f,    1.0f, 0.0f,   // 右下
+		-1.2f, -1.2f, 0.0f,    0.0f, 0.0f,   // 左下
+		-1.2f,  1.2f, 0.0f,    0.0f, 1.0f    // 左上
 	};
 
 	unsigned int indices[] = { // 注意索引从0开始! 
@@ -92,15 +92,15 @@ int main()
 	// world space positions of our resume
 	glm::vec3 resumePositions[] = {
 		glm::vec3(0.0f,  0.0f,  0.0f),
-		glm::vec3(0.2f,  0.3f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
+		glm::vec3(1.0f,  0.3f, -15.0f),
+		glm::vec3(-1.8f, -2.2f, -2.5f),
 		glm::vec3(-3.8f, -2.0f, -12.3f),
 		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f,  3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f,  2.0f, -2.5f),
-		glm::vec3(1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
+		glm::vec3(-3.7f,  3.0f, -7.5f),
+		glm::vec3(2.3f, -2.0f, -2.5f),
+		glm::vec3(2.5f,  2.0f, -2.5f),
+		glm::vec3(2.5f,  0.2f, -1.5f),
+		glm::vec3(-2.3f,  1.0f, -1.5f)
 	};
 
 	unsigned int VBO, VAO;
@@ -133,7 +133,6 @@ int main()
 	myShader.use();
 	myShader.setInt("resume1", 0);
 
-
 	while (!glfwWindowShouldClose(window))
 	{
 		GLfloat currentFrame = glfwGetTime();
@@ -159,8 +158,9 @@ int main()
 		myShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
 		myShader.setMat4("view", view);
 
-
+		
 		glBindVertexArray(VAO);
+		
 		for (unsigned int i = 0; i < v_texture.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0);
@@ -168,8 +168,8 @@ int main()
 			// calculate the model matrix for each object and pass it to shader before drawing
 			glm::mat4 model;
 			model = glm::translate(model, resumePositions[i]);
-			float angle = 20.0f * i;
-			model = glm::rotate(model, (float)glfwGetTime()*glm::radians(angle)/2, glm::vec3(1.0f, 0.3f, 0.5f));
+			GLfloat angle = 20 * (i+1);
+			model = glm::rotate(model, (float)glfwGetTime()*glm::radians(angle)/2, glm::vec3(0, 1.0f, 0));
 			myShader.setMat4("model", model);
 			// camera/view transformation
 			glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
@@ -178,6 +178,7 @@ int main()
 
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		}
+
 
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		
@@ -199,15 +200,16 @@ int main()
 
 void add_texture(std::vector<GLuint>& v)
 {
-	
+	std::string path = "resume/";
 	for (int i = 0; i < 9; i++)
 	{
-		std::string path = "resume/";
+		
 		GLuint texture;
 		path = path + std::to_string(i + 1) + ".jpg";
 		std::cout << path << std::endl;
 		load_texture(texture, path);
 		v.push_back(texture);
+		path = path.substr(0, 7);
 	}
 }
 
