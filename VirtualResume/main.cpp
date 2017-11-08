@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "shader.h"
+#include "camera.h"
 #include <iostream>
 
 // settings of window size
@@ -17,6 +18,7 @@ const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 const std::string window_name = "Resume";
 
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void load_texture(GLuint &texture, const std::string& path);
@@ -25,8 +27,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 // camera
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 8.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, -2.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 bool firstMouse = true;
@@ -78,10 +80,10 @@ int main()
 
 	GLfloat vertices[] = {
 		//     ---- 位置 --     - 纹理坐标 -
-		1.2f,  1.2f, 0.0f,    1.0f, 1.0f,   // 右上
-		1.2f, -1.2f, 0.0f,    1.0f, 0.0f,   // 右下
-		-1.2f, -1.2f, 0.0f,    0.0f, 0.0f,   // 左下
-		-1.2f,  1.2f, 0.0f,    0.0f, 1.0f    // 左上
+		2.0f,  1.2f, 0.0f,    1.0f, 1.0f,   // 右上
+		2.0f, -1.2f, 0.0f,    1.0f, 0.0f,   // 右下
+		-2.0f, -1.2f, 0.0f,    0.0f, 0.0f,   // 左下
+		-2.0f,  1.2f, 0.0f,    0.0f, 1.0f    // 左上
 	};
 
 	unsigned int indices[] = { // 注意索引从0开始! 
@@ -91,16 +93,16 @@ int main()
 
 	// world space positions of our resume
 	glm::vec3 resumePositions[] = {
-		glm::vec3(0.0f,  0.0f,  0.0f),
-		glm::vec3(1.0f,  0.3f, -15.0f),
-		glm::vec3(-1.8f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-3.7f,  3.0f, -7.5f),
-		glm::vec3(2.3f, -2.0f, -2.5f),
-		glm::vec3(2.5f,  2.0f, -2.5f),
-		glm::vec3(2.5f,  0.2f, -1.5f),
-		glm::vec3(-2.3f,  1.0f, -1.5f)
+		glm::vec3(0.0f,  -4.0f,  0.0f),
+		glm::vec3(3.4f,  -4.0f, -1.4f),
+		glm::vec3(4.8f, -4.0f, -4.8f),
+		glm::vec3(3.4f, -4.0f, -8.2f),
+		glm::vec3(0.0f, -4.0f, -9.6f),
+		glm::vec3(-3.4f, -4.0f, -8.2f),
+		glm::vec3(-4.8f, -4.0f, -4.8f),
+		glm::vec3(-3.4f,  -4.0f, -1.4f),
+//		glm::vec3(-4.8f,  -1.0f, -5.0f)
+//		glm::vec3(-2.4f,  -1.0f, -2.5f)
 	};
 
 	unsigned int VBO, VAO;
@@ -152,8 +154,8 @@ int main()
 
 		glm::mat4 view;
 		glm::mat4 projection;
-		projection = glm::perspective(fov, (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		view = camera.GetViewMatrix();
 		// pass transformation matrices to the shader
 		myShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
 		myShader.setMat4("view", view);
@@ -168,11 +170,11 @@ int main()
 			// calculate the model matrix for each object and pass it to shader before drawing
 			glm::mat4 model;
 			model = glm::translate(model, resumePositions[i]);
-			GLfloat angle = 20 * (i+1);
-			model = glm::rotate(model, (float)glfwGetTime()*glm::radians(angle)/2, glm::vec3(0, 1.0f, 0));
+			GLfloat angle = 45 * i;
+			model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 1.0f, 0));
 			myShader.setMat4("model", model);
 			// camera/view transformation
-			glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+			glm::mat4 view = camera.GetViewMatrix();
 			myShader.setMat4("view", view);
 
 
@@ -201,11 +203,11 @@ int main()
 void add_texture(std::vector<GLuint>& v)
 {
 	std::string path = "resume/";
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		
 		GLuint texture;
-		path = path + std::to_string(i + 1) + ".jpg";
+		path = path + std::to_string(i+1) + ".jpg";
 		std::cout << path << std::endl;
 		load_texture(texture, path);
 		v.push_back(texture);
@@ -246,15 +248,15 @@ void processInput(GLFWwindow *window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 
-	float cameraSpeed = 2.5 * deltaTime;
+	//float cameraSpeed = 2.5 * deltaTime;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		cameraPos += cameraSpeed * cameraFront;
+		camera.ProcessKeyboard(FORWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		cameraPos -= cameraSpeed * cameraFront;
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		camera.ProcessKeyboard(RIGHT, deltaTime);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -278,34 +280,12 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 
-	float sensitivity = 0.1f; // change this value to your liking
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-
-	yaw += xoffset;
-	pitch += yoffset;
-
-	// make sure that when pitch is out of bounds, screen doesn't get flipped
-	if (pitch > 89.0f)
-		pitch = 89.0f;
-	if (pitch < -89.0f)
-		pitch = -89.0f;
-
-	glm::vec3 front;
-	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front.y = sin(glm::radians(pitch));
-	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(front);
+	camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	if (fov >= 1.0f && fov <= 45.0f)
-		fov -= yoffset;
-	if (fov <= 1.0f)
-		fov = 1.0f;
-	if (fov >= 45.0f)
-		fov = 45.0f;
+	camera.ProcessMouseScroll(yoffset);
 }
