@@ -1,12 +1,27 @@
-﻿  main.cpp
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(140): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(173): warning C4244: “初始化”: 从“unsigned int”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(273): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(274): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(278): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(279): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(280): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(281): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(290): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-  VirtualResume.vcxproj -> E:\Coding\SRTP\VirtualResume\x64\Debug\VirtualResume.exe
-  VirtualResume.vcxproj -> E:\Coding\SRTP\VirtualResume\x64\Debug\VirtualResume.pdb (Partial PDB)
+﻿  glad.c
+  main.cpp
+f:\opengl\srtp\virtual-resume\virtualresume\main.cpp(199): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
+f:\opengl\srtp\virtual-resume\virtualresume\main.cpp(232): warning C4244: “初始化”: 从“unsigned int”转换到“GLfloat”，可能丢失数据
+f:\opengl\srtp\virtual-resume\virtualresume\main.cpp(365): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+f:\opengl\srtp\virtual-resume\virtualresume\main.cpp(366): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+f:\opengl\srtp\virtual-resume\virtualresume\main.cpp(370): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+f:\opengl\srtp\virtual-resume\virtualresume\main.cpp(371): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+f:\opengl\srtp\virtual-resume\virtualresume\main.cpp(372): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+f:\opengl\srtp\virtual-resume\virtualresume\main.cpp(373): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+f:\opengl\srtp\virtual-resume\virtualresume\main.cpp(382): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+glfw3.lib(context.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(context.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(init.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(init.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(input.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(input.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(monitor.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(monitor.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(vulkan.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(vulkan.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(window.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(window.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(win32_init.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(win32_init.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(win32_joystick.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(win32_joystick.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(win32_monitor.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(win32_monitor.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(win32_time.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(win32_time.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(win32_tls.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(win32_tls.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(win32_window.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(win32_window.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(wgl_context.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(wgl_context.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+glfw3.lib(egl_context.obj) : warning LNK4099: 未找到 PDB“glfw.pdb”(使用“glfw3.lib(egl_context.obj)”或在“F:\OpenGL\srtp\Virtual-Resume\x64\Debug\glfw.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+  VirtualResume.vcxproj -> F:\OpenGL\srtp\Virtual-Resume\x64\Debug\VirtualResume.exe
+  VirtualResume.vcxproj -> F:\OpenGL\srtp\Virtual-Resume\x64\Debug\VirtualResume.pdb (Partial PDB)
