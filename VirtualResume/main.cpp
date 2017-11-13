@@ -14,14 +14,15 @@
 #include <iostream>
 
 // settings of window size
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1600;
+const unsigned int SCR_HEIGHT = 1200;
 const std::string window_name = "Resume";
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void load_texture(GLuint &texture, const std::string& path);
+void load_texture_png(GLuint &texture, const std::string& path);
 void add_texture(std::vector<GLuint>& v);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -77,7 +78,50 @@ int main()
 	glEnable(GL_DEPTH_TEST);//configure opengl state;
 
 	Shader myShader("vertex.vs", "fragment.fs");
+	float BgVertices[] = {
+		-50.5f, -50.5f, -50.5f,  0.0f, 0.0f,
+		50.5f, -50.5f, -50.5f,  1.0f, 0.0f,
+		50.5f,  50.5f, -50.5f,  1.0f, 1.0f,
+		50.5f,  50.5f, -50.5f,  1.0f, 1.0f,
+		-50.5f,  50.5f, -50.5f,  0.0f, 1.0f,
+		-50.5f, -50.5f, -50.5f,  0.0f, 0.0f,
 
+		-50.5f, -50.5f,  50.5f,  0.0f, 0.0f,
+		50.5f, -50.5f,  50.5f,  1.0f, 0.0f,
+		50.5f,  50.5f,  50.5f,  1.0f, 1.0f,
+		50.5f,  50.5f,  50.5f,  1.0f, 1.0f,
+		-50.5f,  50.5f,  50.5f,  0.0f, 1.0f,
+		-50.5f, -50.5f,  50.5f,  0.0f, 0.0f,
+
+		-50.5f,  50.5f,  50.5f,  1.0f, 0.0f,
+		-50.5f,  50.5f, -50.5f,  1.0f, 1.0f,
+		-50.5f, -50.5f, -50.5f,  0.0f, 1.0f,
+		-50.5f, -50.5f, -50.5f,  0.0f, 1.0f,
+		-50.5f, -50.5f,  50.5f,  0.0f, 0.0f,
+		-50.5f,  50.5f,  50.5f,  1.0f, 0.0f,
+
+		50.5f,  50.5f,  50.5f,  1.0f, 0.0f,
+		50.5f,  50.5f, -50.5f,  1.0f, 1.0f,
+		50.5f, -50.5f, -50.5f,  0.0f, 1.0f,
+		50.5f, -50.5f, -50.5f,  0.0f, 1.0f,
+		50.5f, -50.5f,  50.5f,  0.0f, 0.0f,
+		50.5f,  50.5f,  50.5f,  1.0f, 0.0f,
+
+		-50.5f, -50.5f, -50.5f,  0.0f, 1.0f,
+		50.5f, -50.5f, -50.5f,  1.0f, 1.0f,
+		50.5f, -50.5f,  50.5f,  1.0f, 0.0f,
+		50.5f, -50.5f,  50.5f,  1.0f, 0.0f,
+		-50.5f, -50.5f,  50.5f,  0.0f, 0.0f,
+		-50.5f, -50.5f, -50.5f,  0.0f, 1.0f,
+
+		-50.5f,  50.5f, -50.5f,  0.0f, 1.0f,
+		50.5f,  50.5f, -50.5f,  1.0f, 1.0f,
+		50.5f,  50.5f,  50.5f,  1.0f, 0.0f,
+		50.5f,  50.5f,  50.5f,  1.0f, 0.0f,
+		-50.5f,  50.5f,  50.5f,  0.0f, 0.0f,
+		-50.5f,  50.5f, -50.5f,  0.0f, 1.0f
+	};
+	glm::vec3 background = glm::vec3(0.0f,  5.0f,  10.0f);
 	GLfloat vertices[] = {
 		//     ---- 位置 --     - 纹理坐标 -
 		2.0f,  1.2f, 0.0f,    1.0f, 1.0f,   // 右上
@@ -104,6 +148,20 @@ int main()
 //		glm::vec3(-4.8f,  -1.0f, -5.0f)
 //		glm::vec3(-2.4f,  -1.0f, -2.5f)
 	};
+	//background
+	unsigned int VBO1, VAO1;
+	glGenVertexArrays(1, &VAO1);
+	glGenBuffers(1, &VBO1);
+	glBindVertexArray(VAO1);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(BgVertices), BgVertices, GL_STATIC_DRAW);
+
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
 
 	unsigned int VBO, VAO;
 	unsigned int EBO;
@@ -129,7 +187,8 @@ int main()
 
 	std::vector<GLuint> v_texture;
 	add_texture(v_texture);
-
+	GLuint bg_texture;
+	load_texture_png(bg_texture, "background.jpg");
 	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
 	// -------------------------------------------------------------------------------------------
 	myShader.use();
@@ -181,7 +240,15 @@ int main()
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		}
 
-
+		glBindVertexArray(VAO1);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, bg_texture);
+		glm::mat4 model;
+		model = glm::translate(model, background);
+	    view = camera.GetViewMatrix();
+		myShader.setMat4("view", view);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
 		
 
@@ -193,7 +260,8 @@ int main()
 	// ------------------------------------------------------------------------
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
-
+	glDeleteVertexArrays(1, &VAO1);
+	glDeleteBuffers(1, &VBO1);
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
 	glfwTerminate();
@@ -214,7 +282,31 @@ void add_texture(std::vector<GLuint>& v)
 		path = path.substr(0, 7);
 	}
 }
+void load_texture_png(GLuint &texture, const std::string& path)
+{
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	// set the texture wrapping parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// set texture filtering parameters
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	int width, height, nrChannels;
+	unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+	if (data)
+	{
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		std::cout << "Failed to load texture  " << path << std::endl;
+	}
+	stbi_image_free(data);
+}
 void load_texture(GLuint &texture, const std::string& path)
 {
 	glGenTextures(1, &texture);
@@ -236,7 +328,7 @@ void load_texture(GLuint &texture, const std::string& path)
 	}
 	else
 	{
-		std::cout << "Failed to load texture" << std::endl;
+		std::cout << "Failed to load texture  "<<path << std::endl;
 	}
 	stbi_image_free(data);
 }
