@@ -126,6 +126,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.fs" />
+    <None Include="skybox.fs" />
+    <None Include="skybox.vs" />
     <None Include="vertex.vs" />
   </ItemGroup>
   <ItemGroup>

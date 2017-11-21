@@ -40,6 +40,12 @@
     <None Include="fragment.fs">
       <Filter>源文件</Filter>
     </None>
+    <None Include="skybox.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="skybox.fs">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">
