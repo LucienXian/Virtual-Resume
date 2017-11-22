@@ -1,7 +1,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+
 #include <string>
 #include <vector>
 
@@ -10,15 +9,17 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "shader.h"
+#include"model.h"
 #include "camera.h"
 #include <iostream>
 
+#define PI 3.1415926
 // settings of window size
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1600;
+const unsigned int SCR_HEIGHT = 1200;
 const std::string window_name = "Resume";
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(-23.0f, 7.0f, 0.0f));
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void load_texture(GLuint &texture, const std::string& path);
@@ -26,12 +27,13 @@ void add_texture(std::vector<GLuint>& v);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 unsigned int loadCubemap(std::vector<std::string> faces);
-
+float* generound(int n); 
 
 // camera
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 8.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, -2.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+/*
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -0.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 0.0f, 0.0f);*/
 
 bool firstMouse = true;
 GLfloat yaw = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
@@ -78,36 +80,39 @@ int main()
 
 	glEnable(GL_DEPTH_TEST);//configure opengl state;
 
-	Shader myShader("vertex.vs", "fragment.fs");
+	Shader roundShader("vertex.vs", "fragment.fs");
 	Shader skyboxShader("skybox.vs", "skybox.fs");
+	Shader modelShader("3Dmodel.vs", "3Dmodel.fs");
 
-	GLfloat vertices[] = {
-		//     ---- 位置 --     - 纹理坐标 -
-		2.0f,  1.2f, 0.0f,    1.0f, 1.0f,   // 右上
-		2.0f, -1.2f, 0.0f,    1.0f, 0.0f,   // 右下
-		-2.0f, -1.2f, 0.0f,    0.0f, 0.0f,   // 左下
-		-2.0f,  1.2f, 0.0f,    0.0f, 1.0f    // 左上
-	};
 
-	unsigned int indices[] = { // 注意索引从0开始! 
-		0, 1, 3, // 第一个三角形
-		1, 2, 3  // 第二个三角形
-	};
+	int number_round = 80;//把圆柱划分的份数
+	int slice = number_round / 8;//份数除以8份简历
+	GLfloat *vertices = generound(number_round);
+	unsigned int VBO[8], VAO[8];
+	unsigned int EBO;
+	
+	for (int i = 0; i < 8; i++) {
+		glGenVertexArrays(1, &VAO[i]);
+		glGenBuffers(1, &VBO[i]);
 
-	// world space positions of our resume
-	glm::vec3 resumePositions[] = {
-		glm::vec3(0.0f,  -4.0f,  0.0f),
-		glm::vec3(3.4f,  -4.0f, -1.4f),
-		glm::vec3(4.8f, -4.0f, -4.8f),
-		glm::vec3(3.4f, -4.0f, -8.2f),
-		glm::vec3(0.0f, -4.0f, -9.6f),
-		glm::vec3(-3.4f, -4.0f, -8.2f),
-		glm::vec3(-4.8f, -4.0f, -4.8f),
-		glm::vec3(-3.4f,  -4.0f, -1.4f),
-//		glm::vec3(-4.8f,  -1.0f, -5.0f)
-//		glm::vec3(-2.4f,  -1.0f, -2.5f)
-	};
+		glBindVertexArray(VAO[i]);
+		int size = sizeof(float) * 30 * number_round;
+		glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
+		glBufferData(GL_ARRAY_BUFFER, size / 8, vertices + i * 30 * slice, GL_STATIC_DRAW);
+		// 复制到一个索引缓冲
+		/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);*/
 
+		// position attribute
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+		glEnableVertexAttribArray(0);
+
+		// texture coord attribute
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
+	}
+	std::vector<GLuint> v_texture;
+	add_texture(v_texture);
 	float skyboxVertices[] = {
 		// positions          
 		-1.0f,  1.0f, -1.0f,
@@ -153,30 +158,6 @@ int main()
 		1.0f, -1.0f,  1.0f
 	};
 
-	unsigned int VBO, VAO;
-	unsigned int EBO;
-	glGenBuffers(1, &EBO);
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	// 复制到一个索引缓冲
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-	// texture coord attribute
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	std::vector<GLuint> v_texture;
-	add_texture(v_texture);
 
 	//skybox VAO
 	unsigned int skyboxVAO, skyboxVBO;
@@ -201,13 +182,16 @@ int main()
 
 	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
 	// -------------------------------------------------------------------------------------------
-	myShader.use();
-	myShader.setInt("resume1", 0);
+	roundShader.use();
+	roundShader.setInt("resume1", 0);
 
 	//skybox configuration
 	skyboxShader.use();
 	skyboxShader.setInt("skybox", 0);
 
+	
+
+	Model skillModel("model\\skills/skill.obj");
 	while (!glfwWindowShouldClose(window))
 	{
 		GLfloat currentFrame = glfwGetTime();
@@ -221,37 +205,41 @@ int main()
 		glClearColor(0, 0, 0, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // also clear the depth buffer now!
 
-		
-
-		myShader.use();
-
 		glm::mat4 view;
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		view = camera.GetViewMatrix();
 		// pass transformation matrices to the shader
-		myShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
-		myShader.setMat4("view", view);
-
-		
-		glBindVertexArray(VAO);
-		
-		for (unsigned int i = 0; i < v_texture.size(); i++)
 		{
+			modelShader.use();
+			modelShader.setMat4("projection", projection);
+			modelShader.setMat4("view", view);
+			glm::mat4 model;
+			model = glm::translate(model, glm::vec3(0.0f, 12.0f, -5.0f)); // translate it down so it's at the center of the scene
+			model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));	// it's a bit too big for our scene, so scale it down
+			modelShader.setMat4("model", model);		
+			skillModel.Draw(modelShader); 
+		}
+		//分别画八张简历缩影，形成圆柱
+		roundShader.use();
+		roundShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+		roundShader.setMat4("view", view);
+		for (unsigned int i = 0; i <8; i++)//v_texture.size()
+		{
+			glBindVertexArray(VAO[i]);
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, v_texture[i]);
 			// calculate the model matrix for each object and pass it to shader before drawing
 			glm::mat4 model;
-			model = glm::translate(model, resumePositions[i]);
-			GLfloat angle = 45 * i;
-			model = glm::rotate(model, glm::radians(angle), glm::vec3(0, 1.0f, 0));
-			myShader.setMat4("model", model);
+			
+			model = glm::rotate(model, (float)(0.1*glfwGetTime()), glm::vec3(0, 1.0f, 0));
+			model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
+			roundShader.setMat4("model", model);
 			// camera/view transformation
 			glm::mat4 view = camera.GetViewMatrix();
-			myShader.setMat4("view", view);
+			roundShader.setMat4("view", view);
+			glDrawArrays(GL_TRIANGLES, 0, 6 * number_round / 8 - 6);
 
-
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		}
 
 		// draw skybox as last
@@ -276,9 +264,13 @@ int main()
 
 	// optional: de-allocate all resources once they've outlived their purpose:
 	// ------------------------------------------------------------------------
-	glDeleteVertexArrays(1, &VAO);
+	for (int i = 0; i < 8; i++)
+	{
+		glDeleteBuffers(1, &VBO[i]);
+		glDeleteVertexArrays(1, &VAO[i]);
+	}
 	glDeleteVertexArrays(1, &skyboxVAO);
-	glDeleteBuffers(1, &VBO);
+
 	glDeleteBuffers(1, &skyboxVBO);
 
 	// glfw: terminate, clearing all previously allocated GLFW resources.
@@ -405,4 +397,64 @@ unsigned int loadCubemap(std::vector<std::string> faces)
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
 	return textureID;
+}
+float* generound(int n)
+{
+	float *vertice = (float*)malloc(sizeof(float) * 30 * n);
+	float z = 5.0;
+	float x = 5.0;
+	float y = 1.2;
+	double u = 1.0 * 2 * PI / n;
+	int slice = n / 8;
+	float rx[80], rz[80], tx[80];
+	for (int i = 0; i < n; i++)
+	{
+		rx[i] = x*cos(u*i);
+		rz[i] = z*sin(u*i);
+		tx[i] = 1 - (i%slice)*1.0 / (slice - 1);
+		//cout << "rx: " << rx[i] << "  rz:  " << rz[i] << endl;
+	}
+	for (int i = 0; i < n; i++)
+	{
+		int m = 30 * i;
+		int j = (i + 1) % n;
+		vertice[m] = rx[i];
+		vertice[m + 1] = -y;
+		vertice[m + 2] = rz[i];
+		vertice[m + 3] = tx[i];
+		vertice[m + 4] = 0;
+
+		vertice[m + 5] = rx[j];
+		vertice[m + 6] = -y;
+		vertice[m + 7] = rz[j];
+		vertice[m + 8] = tx[j];
+		vertice[m + 9] = 0;
+
+		vertice[m + 10] = rx[j];
+		vertice[m + 11] = y;
+		vertice[m + 12] = rz[j];
+		vertice[m + 13] = tx[j];
+		vertice[m + 14] = 1;
+
+		vertice[m + 15] = rx[j];
+		vertice[m + 16] = y;
+		vertice[m + 17] = rz[j];
+		vertice[m + 18] = tx[j];
+		vertice[m + 19] = 1;
+
+		vertice[m + 20] = rx[i];
+		vertice[m + 21] = y;
+		vertice[m + 22] = rz[i];
+		vertice[m + 23] = tx[i];
+		vertice[m + 24] = 1;
+
+		vertice[m + 25] = rx[i];
+		vertice[m + 26] = -y;
+		vertice[m + 27] = rz[i];
+		vertice[m + 28] = tx[i];
+		vertice[m + 29] = 0;
+	}
+	/*for (int i = 0; i < 30; i++)
+	cout << vertice[i] << ",";*/
+	return vertice;
 }
