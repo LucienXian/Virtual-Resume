@@ -33,11 +33,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 unsigned int loadCubemap(std::vector<std::string> faces);
 float* generound(int n); 
 
-// camera
-/*
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -0.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 0.0f, 0.0f);*/
+
 
 bool firstMouse = true;
 GLfloat yaw = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
@@ -195,8 +191,10 @@ int main()
 
 	
 	
-	
+	//给类分配资源空间
 	resume = new Resume();
+
+
 	while (!glfwWindowShouldClose(window))
 	{
 		GLfloat currentFrame = glfwGetTime();
@@ -214,7 +212,8 @@ int main()
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		view = camera.GetViewMatrix();
-		// pass transformation matrices to the shader
+
+	    //绘制模型
 		{
 			modelShader.use();
 			modelShader.setMat4("projection", projection);
@@ -230,7 +229,7 @@ int main()
 				model = glm::translate(model, glm::vec3(0.0f, 12.0f, -5.0f));
 				model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));
 				
-			}	// it's a bit too big for our scene, so scale it down
+			}	
 			modelShader.setMat4("model", model);		
 			resume->Draw(modelShader); 
 		}
