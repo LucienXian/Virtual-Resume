@@ -6,7 +6,6 @@ private:
 	int current = 0;
 
 public:
-	
 	Resume() {
 		resumes[0] = Model("model\\info/info.obj");
 		resumes[1] = Model("model\\skills/skill.obj");
