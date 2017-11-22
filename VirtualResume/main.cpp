@@ -11,13 +11,17 @@
 #include "shader.h"
 #include"model.h"
 #include "camera.h"
+#include "Resumes.h"
 #include <iostream>
 
 #define PI 3.1415926
 // settings of window size
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 1200;
-const std::string window_name = "Resume";
+const std::string window_name = "Resume"; 
+
+//把简历集合定为全局变量
+Resume *resume;
 
 Camera camera(glm::vec3(-23.0f, 7.0f, 0.0f));
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -190,8 +194,9 @@ int main()
 	skyboxShader.setInt("skybox", 0);
 
 	
-
-	Model skillModel("model\\skills/skill.obj");
+	
+	
+	resume = new Resume();
 	while (!glfwWindowShouldClose(window))
 	{
 		GLfloat currentFrame = glfwGetTime();
@@ -215,10 +220,19 @@ int main()
 			modelShader.setMat4("projection", projection);
 			modelShader.setMat4("view", view);
 			glm::mat4 model;
-			model = glm::translate(model, glm::vec3(0.0f, 12.0f, -5.0f)); // translate it down so it's at the center of the scene
-			model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));	// it's a bit too big for our scene, so scale it down
+			 // translate it down so it's at the center of the scene
+			if (resume->getCurrent() == 0) {
+				model = glm::translate(model, glm::vec3(0.0f, 14.0f, -8.0f));
+				model = glm::scale(model, glm::vec3(0.12f, 0.12f, 0.12f));
+				
+			}
+			else { 
+				model = glm::translate(model, glm::vec3(0.0f, 12.0f, -5.0f));
+				model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));
+				
+			}	// it's a bit too big for our scene, so scale it down
 			modelShader.setMat4("model", model);		
-			skillModel.Draw(modelShader); 
+			resume->Draw(modelShader); 
 		}
 		//分别画八张简历缩影，形成圆柱
 		roundShader.use();
@@ -270,9 +284,8 @@ int main()
 		glDeleteVertexArrays(1, &VAO[i]);
 	}
 	glDeleteVertexArrays(1, &skyboxVAO);
-
 	glDeleteBuffers(1, &skyboxVBO);
-
+	delete(resume);
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
 	glfwTerminate();
@@ -326,7 +339,6 @@ void processInput(GLFWwindow *window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
-
 	//float cameraSpeed = 2.5 * deltaTime;
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		camera.ProcessKeyboard(FORWARD, deltaTime);
@@ -336,6 +348,10 @@ void processInput(GLFWwindow *window)
 		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
+		resume->ChangeModel(0);
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+		resume->ChangeModel(1);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -398,6 +414,7 @@ unsigned int loadCubemap(std::vector<std::string> faces)
 
 	return textureID;
 }
+//生成圆柱简历所需要的坐标
 float* generound(int n)
 {
 	float *vertice = (float*)malloc(sizeof(float) * 30 * n);
