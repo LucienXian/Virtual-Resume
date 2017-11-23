@@ -32,6 +32,15 @@
     <ClInclude Include="camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Resumes.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.vs">
@@ -45,6 +54,12 @@
     </None>
     <None Include="skybox.fs">
       <Filter>资源文件</Filter>
+    </None>
+    <None Include="3Dmodel.fs">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="3Dmodel.vs">
+      <Filter>源文件</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
