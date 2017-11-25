@@ -225,21 +225,6 @@ int main()
 			modelShader.setMat4("projection", projection);
 			modelShader.setMat4("view", view);
 			resume_creator.show_resume(load_resume_id, modelShader);
-			/*glm::mat4 model;
-			 // translate it down so it's at the center of the scene
-			
-			if (resume->getCurrent() == 0) {
-				model = glm::translate(model, glm::vec3(0.0f, 14.0f, -8.0f));
-				model = glm::scale(model, glm::vec3(0.12f, 0.12f, 0.12f));
-				
-			}
-			else { 
-				model = glm::translate(model, glm::vec3(0.0f, 12.0f, -5.0f));
-				model = glm::scale(model, glm::vec3(0.05f, 0.05f, 0.05f));
-				
-			}	
-			modelShader.setMat4("model", model);		
-			resume->Draw(modelShader); */
 		}
 		//分别画八张简历缩影，形成圆柱
 		roundShader.use();

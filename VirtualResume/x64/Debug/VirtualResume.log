@@ -1,2 +1,18 @@
-﻿  VirtualResume.vcxproj -> E:\Coding\SRTP\VirtualResume\x64\Debug\VirtualResume.exe
+﻿  main.cpp
+e:\coding\srtp\virtualresume\virtualresume\mesh.h(90): warning C4267: “参数”: 从“size_t”转换到“GLsizei”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(202): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(206): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(97): warning C4101: “EBO”: 未引用的局部变量
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(362): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(363): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(367): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(368): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(369): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(370): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(379): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(417): warning C4305: “初始化”: 从“double”到“float”截断
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(423): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(424): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(425): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+  VirtualResume.vcxproj -> E:\Coding\SRTP\VirtualResume\x64\Debug\VirtualResume.exe
   VirtualResume.vcxproj -> E:\Coding\SRTP\VirtualResume\x64\Debug\VirtualResume.pdb (Partial PDB)
