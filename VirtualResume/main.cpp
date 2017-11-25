@@ -11,7 +11,8 @@
 #include "shader.h"
 #include"model.h"
 #include "camera.h"
-#include "Resumes.h"
+//#include "Resumes.h"
+#include "resume_creator.h"
 #include <iostream>
 
 #define PI 3.1415926
@@ -20,8 +21,11 @@ const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 1200;
 const std::string window_name = "Resume"; 
 
+std::vector<glm::vec3> vec_resume_pos;
+std::vector<glm::vec3> vec_resume_size;
+
 //把简历集合定为全局变量
-Resume *resume;
+//Resume *resume;
 
 Camera camera(glm::vec3(-23.0f, 7.0f, 0.0f));
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -32,9 +36,10 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 unsigned int loadCubemap(std::vector<std::string> faces);
 float* generound(int n); 
+void init_resume_para();
 
 
-
+int load_resume_id = 0;
 bool firstMouse = true;
 GLfloat yaw = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
 GLfloat pitch = 0.0f;
@@ -80,9 +85,9 @@ int main()
 
 	glEnable(GL_DEPTH_TEST);//configure opengl state;
 
-	Shader roundShader("vertex.vs", "fragment.fs");
-	Shader skyboxShader("skybox.vs", "skybox.fs");
-	Shader modelShader("3Dmodel.vs", "3Dmodel.fs");
+	Shader roundShader("Shader/vertex.vs", "Shader/fragment.fs");
+	Shader skyboxShader("Shader/skybox.vs", "Shader/skybox.fs");
+	Shader modelShader("Shader/3Dmodel.vs", "Shader/3Dmodel.fs");
 
 
 	int number_round = 80;//把圆柱划分的份数
@@ -188,12 +193,13 @@ int main()
 	//skybox configuration
 	skyboxShader.use();
 	skyboxShader.setInt("skybox", 0);
-
+	
+	init_resume_para();
 	
 	
 	//给类分配资源空间
-	resume = new Resume();
-
+	//resume = new Resume();
+	Resume_creator resume_creator(vec_resume_pos, vec_resume_size, vec_resume_pos.size());
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -218,8 +224,10 @@ int main()
 			modelShader.use();
 			modelShader.setMat4("projection", projection);
 			modelShader.setMat4("view", view);
-			glm::mat4 model;
+			resume_creator.show_resume(load_resume_id, modelShader);
+			/*glm::mat4 model;
 			 // translate it down so it's at the center of the scene
+			
 			if (resume->getCurrent() == 0) {
 				model = glm::translate(model, glm::vec3(0.0f, 14.0f, -8.0f));
 				model = glm::scale(model, glm::vec3(0.12f, 0.12f, 0.12f));
@@ -231,7 +239,7 @@ int main()
 				
 			}	
 			modelShader.setMat4("model", model);		
-			resume->Draw(modelShader); 
+			resume->Draw(modelShader); */
 		}
 		//分别画八张简历缩影，形成圆柱
 		roundShader.use();
@@ -284,7 +292,7 @@ int main()
 	}
 	glDeleteVertexArrays(1, &skyboxVAO);
 	glDeleteBuffers(1, &skyboxVBO);
-	delete(resume);
+	//delete(resume);
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
 	glfwTerminate();
@@ -314,7 +322,7 @@ void load_texture(GLuint &texture, const std::string& path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	int width, height, nrChannels;
@@ -348,9 +356,11 @@ void processInput(GLFWwindow *window)
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_0) == GLFW_PRESS)
-		resume->ChangeModel(0);
+		load_resume_id = 0;
+		//resume->ChangeModel(0);
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
-		resume->ChangeModel(1);
+		load_resume_id = 1;
+		//resume->ChangeModel(1);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -473,4 +483,12 @@ float* generound(int n)
 	/*for (int i = 0; i < 30; i++)
 	cout << vertice[i] << ",";*/
 	return vertice;
+}
+
+void init_resume_para() {
+	vec_resume_pos.push_back(glm::vec3(0.0f, 14.0f, -8.0f));
+	vec_resume_pos.push_back(glm::vec3(0.0f, 12.0f, -5.0f));
+
+	vec_resume_size.push_back(glm::vec3(0.12f, 0.12f, 0.12f));
+	vec_resume_size.push_back(glm::vec3(0.05f, 0.05f, 0.05f));
 }

@@ -121,19 +121,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
+    <ClInclude Include="Info_resume.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="model.h" />
-    <ClInclude Include="Resumes.h" />
+    <ClInclude Include="Resume.h" />
+    <ClInclude Include="resume_creator.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="stb_image.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="3Dmodel.fs" />
-    <None Include="3Dmodel.vs" />
-    <None Include="fragment.fs" />
-    <None Include="skybox.fs" />
-    <None Include="skybox.vs" />
-    <None Include="vertex.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg" />
@@ -146,6 +140,14 @@
     <Image Include="resume\7.jpg" />
     <Image Include="resume\8.jpg" />
     <Image Include="resume\9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\3Dmodel.fs" />
+    <None Include="Shader\3Dmodel.vs" />
+    <None Include="Shader\fragment.fs" />
+    <None Include="Shader\skybox.fs" />
+    <None Include="Shader\skybox.vs" />
+    <None Include="Shader\vertex.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
