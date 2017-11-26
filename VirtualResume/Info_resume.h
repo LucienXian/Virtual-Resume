@@ -1,13 +1,55 @@
 #pragma once
 #include "Resume.h"
-
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <vector>
+#include <string>
+#include "TextRender.h"
 class Info_resume : public Resumes {
 public:
 	Info_resume(glm::vec3 pos, glm::vec3 size):_pos(pos), _size(size){
-		resume = Model("model\\info/info.obj");
+		t = new TextRender();
+		title = "Basic infomation";
+		introduction = "INTRODUCTION";
+		text1 = "balabalaasdfasdfasdf 1";
+		text2 = "balabalasdafasdfaf 2";
+		text3 = "balabalaasdfdsfasdf 3";
+		hobby = "Hobbies";
+		hobby1 = "hobby1";
+		hobby2 = "hobby2";
+		hobby3 = "hobby3";
+		hobby4 = "hobby4";
+		CreateResume();
 	}
 	virtual void draw_resume(Shader& shader) {
-		resume.Draw(shader);
+		
+		for (int i = 0; i < objs.size(); i++)
+		{
+			//cout << objs.size();
+			glm::mat4 model;
+			model = glm::translate(obj_model[i], _pos);
+			model = glm::scale(model, _size);
+			shader.setMat4("model", model);
+			objs[i].Draw(shader);
+		}
+		
+		t->shader.use();
+		t->shader.setMat4("view", view);
+		t->shader.setMat4("projection", projection);
+		glm::mat4 model;
+		model = glm::rotate(model, (float)glm::radians(-90.0f), glm::vec3(0, 1.0f, 0));
+		t->shader.setMat4("model", model);
+		t->draw(title, 0.0f, 12.0f, -9.3f, 0.028f, glm::vec3(1.0F, 1.0f, 1.0f));
+		t->draw(introduction, 0.0f, 10.6f, -9.2f, 0.010f, glm::vec3(0.5f, 1.0f, 0.0f));
+		t->draw(text1, 0.0f, 9.5f, -9.0f, 0.009f, glm::vec3(1.0f, 1.0f, 1.0f));
+		t->draw(text2, 0.0f, 8.5f, -9.0f, 0.009f, glm::vec3(1.0f, 1.0f, 1.0f));
+		t->draw(text3, 0.0f, 7.5f, -9.0f, 0.009f, glm::vec3(1.0f, 1.0f, 1.0f));
+		t->draw(hobby, 0.0f, 9.3f, -1.5f, 0.015f, glm::vec3(1.0f, 1.0f, 1.0f));
+		t->draw(hobby1, 0.0f, 7.8f, -3.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
+		t->draw(hobby2, 0.0f, 7.8f, -0.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
+		t->draw(hobby3, 0.0f, 6.3f, -3.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
+		t->draw(hobby4, 0.0f, 6.3f, -0.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
 	}
 	virtual void set_pos(glm::vec3 new_pos) {
 		_pos = new_pos;
@@ -18,5 +60,20 @@ public:
 private:
 	glm::vec3 _pos;
 	glm::vec3 _size;
-	Model resume;
+	string title;
+	string info;
+	string introduction;
+	string text1;
+	string text2;
+	string text3;
+	string hobby;
+	string hobby1, hobby2, hobby3, hobby4;
+	//TextRender t;
+	void CreateResume() {
+		Model total = Model("model\\info/info1.obj");
+		objs.push_back(total);
+		glm::mat4 pos;
+		obj_model.push_back(pos);
+	}
+	
 };

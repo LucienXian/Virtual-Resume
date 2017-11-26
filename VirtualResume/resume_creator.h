@@ -1,6 +1,7 @@
 #pragma once
 #include "Resume.h"
 #include "Info_resume.h"
+#include "Skill_resume.h"
 #include <unordered_map>
 #include <vector>
 
@@ -19,27 +20,29 @@ public:
 		}
 	}
 	void show_resume(int id, Shader& shader) {
-		glm::mat4 model;
-		model = glm::translate(model, _pos[id]);
-		model = glm::scale(model, _r_size[id]);
-		shader.setMat4("model", model);
 		resume_table[id]->draw_resume(shader);
 	}
-
+	void setmat4(glm::mat4 view, glm::mat4 projection)
+	{
+		for (int i = 0; i < num_resume; i++) {
+			resume_table[i]->setmat4(view, projection);
+		}
+	}
 private:
 	int num_resume;
 	unordered_map<int, Resumes*> resume_table;
 	std::vector<glm::vec3> _pos;
 	std::vector<glm::vec3> _r_size;
-	Resumes* generateResume(int id) {
+	glm::mat4 view;
+	glm::mat4 projection;
+	Resumes* generateResume(int id) {	
 		switch (id)
 		{
-		case 0:
-			return new Info_resume(_pos[id], _r_size[id]);
-			break;
+		case 0: return new Info_resume(_pos[id], _r_size[id]);
+		case 1: return new Skill_resume(_pos[id], _r_size[id]);
 		default:
-			return NULL;
 			break;
 		}
+		
 	}
 };
