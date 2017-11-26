@@ -20,6 +20,9 @@ public:
 		hobby2 = "hobby2";
 		hobby3 = "hobby3";
 		hobby4 = "hobby4";
+		hobby5 = "hobby5";
+		hobby6 = "hobby6";
+		name = "Name";
 		CreateResume();
 	}
 	virtual void draw_resume(Shader& shader) {
@@ -50,6 +53,9 @@ public:
 		t->draw(hobby2, 0.0f, 7.8f, -0.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
 		t->draw(hobby3, 0.0f, 6.3f, -3.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
 		t->draw(hobby4, 0.0f, 6.3f, -0.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
+		t->draw(hobby5, 0.0f, 4.8f, -3.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
+		t->draw(hobby6, 0.0f, 4.8f, -0.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
+		t->draw(name, 0.0f, 7.8f, 5.0f, 0.015f, glm::vec3(1.0f, 1.0f, 0.0f));
 	}
 	virtual void set_pos(glm::vec3 new_pos) {
 		_pos = new_pos;
@@ -67,7 +73,8 @@ private:
 	string text2;
 	string text3;
 	string hobby;
-	string hobby1, hobby2, hobby3, hobby4;
+	string hobby1, hobby2, hobby3, hobby4, hobby5, hobby6;
+	string name;
 	//TextRender t;
 	void CreateResume() {
 		Model total = Model("model\\info/info1.obj");

@@ -1,5 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# 创建的文件:26.11.2017 19:53:08
+# 创建的文件:26.11.2017 20:11:43
 
 newmtl Wall_Paint
 	Ns 10.0000
@@ -15,6 +15,16 @@ newmtl Wall_Paint
 	map_Ka -s 0.0208 0.0208 1.0000 orange.png
 	map_Kd -s 0.0208 0.0208 1.0000 orange.png
 
+newmtl wire_017183225
+	Ns 32
+	d 1
+	Tr 0
+	Tf 1 1 1
+	illum 2
+	Ka 0.0667 0.7176 0.8824
+	Kd 0.0667 0.7176 0.8824
+	Ks 0.3500 0.3500 0.3500
+
 newmtl 02___Default
 	Ns 10.0000
 	Ni 1.5000
@@ -28,16 +38,6 @@ newmtl 02___Default
 	Ke 0.0000 0.0000 0.0000
 	map_Ka -s 0.0208 0.0208 1.0000 blue1.png
 	map_Kd -s 0.0208 0.0208 1.0000 blue1.png
-
-newmtl wire_017183225
-	Ns 32
-	d 1
-	Tr 0
-	Tf 1 1 1
-	illum 2
-	Ka 0.0667 0.7176 0.8824
-	Kd 0.0667 0.7176 0.8824
-	Ks 0.3500 0.3500 0.3500
 
 newmtl Solid_Glass
 	Ns 10.0000
