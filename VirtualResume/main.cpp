@@ -105,7 +105,7 @@ int main()
 		glBindVertexArray(VAO[i]);
 		int size = sizeof(float) * 30 * number_round;
 		glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
-		glBufferData(GL_ARRAY_BUFFER, size / 8, vertices + i * 30 * slice, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size / 8, vertices + i * 30 * slice, GL_DYNAMIC_DRAW);
 		// 复制到一个索引缓冲
 		/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);*/
@@ -312,8 +312,8 @@ void load_texture(GLuint &texture, const std::string& path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
 	int width, height, nrChannels;
 	unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
