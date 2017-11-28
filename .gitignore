@@ -35,3 +35,7 @@ x64/Debug/VirtualResume.pdb
 VirtualResume/VirtualResume.vcxproj.filters
 VirtualResume/VirtualResume.vcxproj.filters
 VirtualResume/x64/Debug/vc140.pdb
+*.filters
+*.pdb
+*.pdb
+*.tlog

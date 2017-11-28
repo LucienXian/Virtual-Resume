@@ -350,6 +350,8 @@ void processInput(GLFWwindow *window)
 		//resume->ChangeModel(0);
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		load_resume_id = 1;
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		load_resume_id = 2;
 		//resume->ChangeModel(1);
 }
 
@@ -478,7 +480,9 @@ float* generound(int n)
 void init_resume_para() {
 	vec_resume_pos.push_back(glm::vec3(0.0f, 15.0f, -8.0f));
 	vec_resume_pos.push_back(glm::vec3(0.0f, 12.0f, -5.0f));
+	vec_resume_pos.push_back(glm::vec3(0.0f, 8.8f, -1.7f));
 
 	vec_resume_size.push_back(glm::vec3(0.12f, 0.12f, 0.12f));
 	vec_resume_size.push_back(glm::vec3(0.05f, 0.05f, 0.05f));
+	vec_resume_size.push_back(glm::vec3(0.011f, 0.011f, 0.011f));
 }

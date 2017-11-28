@@ -2,6 +2,7 @@
 #include "Resume.h"
 #include "Info_resume.h"
 #include "Skill_resume.h"
+#include "Job_intention_resume.h"
 #include <unordered_map>
 #include <vector>
 
@@ -40,6 +41,7 @@ private:
 		{
 		case 0: return new Info_resume(_pos[id], _r_size[id]);
 		case 1: return new Skill_resume(_pos[id], _r_size[id]);
+		case 2: return new Job_intention_resume(_pos[id], _r_size[id]);
 		default:
 			break;
 		}

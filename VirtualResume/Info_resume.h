@@ -43,8 +43,8 @@ public:
 		glm::mat4 model;
 		model = glm::rotate(model, (float)glm::radians(-90.0f), glm::vec3(0, 1.0f, 0));
 		t->shader.setMat4("model", model);
-		t->draw(title, 0.0f, 12.0f, -9.3f, 0.028f, glm::vec3(1.0F, 1.0f, 1.0f));
-		t->draw(introduction, 0.0f, 10.6f, -9.2f, 0.010f, glm::vec3(0.5f, 1.0f, 0.0f));
+		t->draw(title, 0.0f, 12.0f, -9.3f, 0.028f, glm::vec3(0.960784, 0.490196, 0.101961));
+		t->draw(introduction, 0.0f, 10.6f, -9.2f, 0.010f, glm::vec3(0.0745098, 0.705882, 0.643137));
 		t->draw(text1, 0.0f, 9.5f, -9.0f, 0.009f, glm::vec3(1.0f, 1.0f, 1.0f));
 		t->draw(text2, 0.0f, 8.5f, -9.0f, 0.009f, glm::vec3(1.0f, 1.0f, 1.0f));
 		t->draw(text3, 0.0f, 7.5f, -9.0f, 0.009f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -55,7 +55,7 @@ public:
 		t->draw(hobby4, 0.0f, 6.3f, -0.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
 		t->draw(hobby5, 0.0f, 4.8f, -3.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
 		t->draw(hobby6, 0.0f, 4.8f, -0.0f, 0.013f, glm::vec3(0.0f, 1.0f, 1.0f));
-		t->draw(name, 0.0f, 7.8f, 5.0f, 0.015f, glm::vec3(1.0f, 1.0f, 0.0f));
+		t->draw(name, 0.0f, 7.8f, 5.2f, 0.015f, glm::vec3(0.0f, 1.0f, 1.0f));
 	}
 	virtual void set_pos(glm::vec3 new_pos) {
 		_pos = new_pos;
