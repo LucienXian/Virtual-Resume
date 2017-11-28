@@ -478,11 +478,11 @@ float* generound(int n)
 }
 
 void init_resume_para() {
-	vec_resume_pos.push_back(glm::vec3(0.0f, 15.0f, -8.0f));
-	vec_resume_pos.push_back(glm::vec3(0.0f, 12.0f, -5.0f));
-	vec_resume_pos.push_back(glm::vec3(0.0f, 8.8f, -1.7f));
+	vec_resume_pos.push_back(glm::vec3(0.0f, 15.0f, -8.0f));//infomation
+	vec_resume_pos.push_back(glm::vec3(0.0f, 12.0f, -5.0f));//skill
+	vec_resume_pos.push_back(glm::vec3(0.0f, 8.2f, -1.7f));//job intention
 
 	vec_resume_size.push_back(glm::vec3(0.12f, 0.12f, 0.12f));
 	vec_resume_size.push_back(glm::vec3(0.05f, 0.05f, 0.05f));
-	vec_resume_size.push_back(glm::vec3(0.011f, 0.011f, 0.011f));
+	vec_resume_size.push_back(glm::vec3(0.01f, 0.01f, 0.01f));
 }

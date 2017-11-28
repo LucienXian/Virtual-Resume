@@ -39,3 +39,7 @@ VirtualResume/x64/Debug/vc140.pdb
 *.pdb
 *.pdb
 *.tlog
+.vs/VirtualResume/v15/ipch/AutoPCH/VIRTUALRESUME-42340849/JOB_INTENTION_RESUME-baac2b6f/JOB_INTENTION_RESUME.ipch
+.vs/VirtualResume/v15/ipch/AutoPCH/VIRTUALRESUME-42340849/JOB_INTENTION-2adce65f/JOB_INTENTION.ipch
+VirtualResume/VirtualResume.vcxproj
+VirtualResume/x64/Debug/glad.obj
