@@ -1,3 +1,4 @@
+#include "Common.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -13,13 +14,12 @@
 #include "camera.h"
 //#include "Resumes.h"
 #include "resume_creator.h"
+#include "TextRender.h"
 #include <iostream>
 
-#define PI 3.1415926
+
 // settings of window size
-const unsigned int SCR_WIDTH = 1600;
-const unsigned int SCR_HEIGHT = 1200;
-const std::string window_name = "Resume"; 
+
 
 std::vector<glm::vec3> vec_resume_pos;
 std::vector<glm::vec3> vec_resume_size;
@@ -68,14 +68,14 @@ int main()
 {
 	InitWindow();
 
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, window_name.c_str(), NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, window_name, NULL, NULL);
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 
 	// tell GLFW to capture our mouse
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
@@ -84,6 +84,8 @@ int main()
 	}
 
 	glEnable(GL_DEPTH_TEST);//configure opengl state;
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	Shader roundShader("Shader/vertex.vs", "Shader/fragment.fs");
 	Shader skyboxShader("Shader/skybox.vs", "Shader/skybox.fs");
@@ -95,7 +97,7 @@ int main()
 	GLfloat *vertices = generound(number_round);
 	unsigned int VBO[8], VAO[8];
 	unsigned int EBO;
-	
+
 	for (int i = 0; i < 8; i++) {
 		glGenVertexArrays(1, &VAO[i]);
 		glGenBuffers(1, &VBO[i]);
@@ -103,7 +105,7 @@ int main()
 		glBindVertexArray(VAO[i]);
 		int size = sizeof(float) * 30 * number_round;
 		glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
-		glBufferData(GL_ARRAY_BUFFER, size / 8, vertices + i * 30 * slice, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size / 8, vertices + i * 30 * slice, GL_DYNAMIC_DRAW);
 		// 复制到一个索引缓冲
 		/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);*/
@@ -185,22 +187,22 @@ int main()
 	unsigned int cubemapTexture = loadCubemap(faces);//load skybox
 
 
-	// tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
-	// -------------------------------------------------------------------------------------------
+													 // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
+													 // -------------------------------------------------------------------------------------------
 	roundShader.use();
 	roundShader.setInt("resume1", 0);
 
 	//skybox configuration
 	skyboxShader.use();
 	skyboxShader.setInt("skybox", 0);
-	
+
 	init_resume_para();
-	
-	
+
+
 	//给类分配资源空间
 	//resume = new Resume();
 	Resume_creator resume_creator(vec_resume_pos, vec_resume_size, vec_resume_pos.size());
-
+	TextRender *t = new TextRender();
 	while (!glfwWindowShouldClose(window))
 	{
 		GLfloat currentFrame = glfwGetTime();
@@ -208,7 +210,7 @@ int main()
 		lastFrame = currentFrame;
 
 		processInput(window);
-		
+
 		// render
 		// ------
 		glClearColor(0, 0, 0, 1.0f);
@@ -219,11 +221,12 @@ int main()
 		projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 		view = camera.GetViewMatrix();
 
-	    //绘制模型
+		//绘制模型
 		{
 			modelShader.use();
 			modelShader.setMat4("projection", projection);
 			modelShader.setMat4("view", view);
+			resume_creator.setmat4(view, projection);
 			resume_creator.show_resume(load_resume_id, modelShader);
 		}
 		//分别画八张简历缩影，形成圆柱
@@ -237,7 +240,7 @@ int main()
 			glBindTexture(GL_TEXTURE_2D, v_texture[i]);
 			// calculate the model matrix for each object and pass it to shader before drawing
 			glm::mat4 model;
-			
+
 			model = glm::rotate(model, (float)(0.1*glfwGetTime()), glm::vec3(0, 1.0f, 0));
 			model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
 			roundShader.setMat4("model", model);
@@ -261,8 +264,8 @@ int main()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 		glDepthFunc(GL_LESS); // set depth function back to default
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
-		
+							  //glDrawArrays(GL_TRIANGLES, 0, 6);
+
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -283,6 +286,8 @@ int main()
 	glfwTerminate();
 	return 0;
 }
+
+	
 
 void add_texture(std::vector<GLuint>& v)
 {
@@ -307,8 +312,8 @@ void load_texture(GLuint &texture, const std::string& path)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	// set texture filtering parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
 	int width, height, nrChannels;
 	unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
@@ -345,6 +350,8 @@ void processInput(GLFWwindow *window)
 		//resume->ChangeModel(0);
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		load_resume_id = 1;
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		load_resume_id = 2;
 		//resume->ChangeModel(1);
 }
 
@@ -471,9 +478,11 @@ float* generound(int n)
 }
 
 void init_resume_para() {
-	vec_resume_pos.push_back(glm::vec3(0.0f, 14.0f, -8.0f));
-	vec_resume_pos.push_back(glm::vec3(0.0f, 12.0f, -5.0f));
+	vec_resume_pos.push_back(glm::vec3(0.0f, 15.0f, -8.0f));//infomation
+	vec_resume_pos.push_back(glm::vec3(0.0f, 12.0f, -5.0f));//skill
+	vec_resume_pos.push_back(glm::vec3(0.0f, 8.2f, -1.7f));//job intention
 
 	vec_resume_size.push_back(glm::vec3(0.12f, 0.12f, 0.12f));
 	vec_resume_size.push_back(glm::vec3(0.05f, 0.05f, 0.05f));
+	vec_resume_size.push_back(glm::vec3(0.01f, 0.01f, 0.01f));
 }
