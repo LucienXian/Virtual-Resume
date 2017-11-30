@@ -11,15 +11,23 @@ public:
 	Skill_resume(glm::vec3 pos, glm::vec3 size) :_pos(pos), _size(size) {
 		t = new TextRender();
 		CreateResume();
-		github="github:xxxxxxx";
-		blog="blog:   xxxxxxxxx";
-		mysql="MySQL   90%";
-		operating_system="Linux    60%";
-		java="Java    55%";
-		python = "Python     70%";
+		//github="github:xxxxxxx";
+		github = this->resume_text["github"];
+		//blog="blog:   xxxxxxxxx";
+		blog = this->resume_text["blog"];
+		//mysql="MySQL   90%";
+		mysql = this->resume_text["mysql"];
+		//operating_system="Linux    60%";
+		operating_system = this->resume_text["operating_system"];
+		//java="Java    55%";
+		java = this->resume_text["java"];
+		//python = "Python     70%";
+		python = this->resume_text["python"];
 		certificates = "Certificates :";
-		certificate1="CET6";
-		certificate2 = "CET4";
+		//certificate1="CET6";
+		//certificate2 = "CET4";
+		certificate1 = this->resume_text["certificate1"];
+		certificate2 = this->resume_text["certificate2"];
 		profile="PROFILE";
 		skills="Skills :";
 	}
@@ -62,7 +70,11 @@ public:
 	virtual void set_size(glm::vec3 new_size) {
 		_size = new_size;
 	}
+	virtual void set_text(unordered_map<string, string> input) {
+		this->resume_text = input;
+	}
 private:
+	unordered_map<string, string> resume_text;
 	glm::vec3 _pos;
 	glm::vec3 _size;
 	string github;

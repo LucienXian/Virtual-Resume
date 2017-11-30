@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phonebook>
+  <!--one item behalfs one contacted person.-->
+  <Info>
+    <text1>balabalaasdfasdfasdf 1</text1>
+    <text2>balabalasdafasdfaf 2</text2>
+    <text3>balabalasdafasdfaf 3</text3>
+    <hobby1>hobby1</hobby1>
+    <hobby2>hobby2</hobby2>
+    <hobby3>hobby3</hobby3>
+    <hobby4>hobby4</hobby4>
+    <hobby5>hobby5</hobby5>
+    <hobby6>hobby6</hobby6>
+    <name>Name</name>
+  </Info>
+  <Skill>
+    <github>github:xxxxxxx</github>
+    <blog>blog:   xxxxxxxxx</blog>
+    <mysql>MySQL   90%</mysql>
+    <operating_system>Linux    60%</operating_system>
+    <java>Java    55%</java>
+    <python>Python     70%</python>
+    <certificate1>CET6</certificate1>
+    <certificate2>CET4</certificate2>
+  </Skill>
+  <Job_intention>
+    <job>Manager</job>
+    <industry>Internet</industry>
+    <place>Hangzhou</place>
+    <salary>15K -- 20K</salary>
+  </Job_intention>
+  <!--more contacted persons.-->
+</phonebook>

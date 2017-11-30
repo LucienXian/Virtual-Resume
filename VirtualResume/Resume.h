@@ -1,6 +1,7 @@
 #pragma once
 #include "model.h"
 #include "shader.h"
+#include <unordered_map>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "TextRender.h"
@@ -10,6 +11,7 @@ public:
 	virtual void draw_resume(Shader& shader) = 0;
 	virtual void set_pos(glm::vec3) = 0;
 	virtual void set_size(glm::vec3) = 0;
+	virtual void set_text(std::unordered_map<string, string> input) {}
 	void setmat4(glm::mat4 view, glm::mat4 projection)
 	{
 		this->projection = projection;

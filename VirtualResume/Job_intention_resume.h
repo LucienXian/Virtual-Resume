@@ -11,13 +11,17 @@ public:
 	Job_intention_resume(glm::vec3 pos, glm::vec3 size) :_pos(pos), _size(size) {
 		t = new TextRender();
 		expected1 = "Expected job";
-		job = "Manager";
+		//job = "Manager";
+		job = this->resume_text["job"];
 		expected2 = "Expected industry";
-		industry = "Internet";
+		//industry = "Internet";
+		industry = this->resume_text["industry"];
 		expected3 = "Expected place";
-		place = "Hangzhou";
+		//place = "Hangzhou";
+		place = this->resume_text["place"];
 		expected4 = "Expected salary";
-		salary = "15K -- 20K";
+		//salary = "15K -- 20K";
+		salary = this->resume_text["salary"];
 		CreateResume();
 	}
 	virtual void draw_resume(Shader& shader) {
@@ -87,7 +91,11 @@ public:
 	virtual void set_size(glm::vec3 new_size) {
 		_size = new_size;
 	}
+	virtual void set_text(unordered_map<string, string> input) {
+		this->resume_text = input;
+	}
 private:
+	unordered_map<string, string> resume_text;
 	glm::vec3 _pos;
 	glm::vec3 _size;
 	string expected1;

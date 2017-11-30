@@ -1,18 +1,22 @@
 ﻿  main.cpp
 e:\coding\srtp\virtualresume\virtualresume\mesh.h(90): warning C4267: “参数”: 从“size_t”转换到“GLsizei”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(202): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(206): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(97): warning C4101: “EBO”: 未引用的局部变量
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(362): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(363): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(367): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(368): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\opengl\include\freetype\freetype.h(2619): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+e:\coding\srtp\virtualresume\virtualresume\textrender.h(135): warning C4838: 从“FT_Pos”转换到“GLuint”需要收缩转换
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(204): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(208): warning C4244: “初始化”: 从“double”转换到“GLfloat”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(99): warning C4101: “EBO”: 未引用的局部变量
 e:\coding\srtp\virtualresume\virtualresume\main.cpp(369): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
 e:\coding\srtp\virtualresume\virtualresume\main.cpp(370): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(379): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(417): warning C4305: “初始化”: 从“double”到“float”截断
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(423): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(424): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
-e:\coding\srtp\virtualresume\virtualresume\main.cpp(425): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(374): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(375): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(376): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(377): warning C4244: “=”: 从“double”转换到“GLfloat”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(386): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(424): warning C4305: “初始化”: 从“double”到“float”截断
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(430): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(431): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\main.cpp(432): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+e:\coding\srtp\virtualresume\virtualresume\resume_creator.h(60): warning C4715: “Resume_creator::generateResume”: 不是所有的控件路径都返回值
+e:\coding\srtp\virtualresume\virtualresume\resume_creator.h(90): warning C4715: “Resume_creator::getXmlInfo”: 不是所有的控件路径都返回值
   VirtualResume.vcxproj -> E:\Coding\SRTP\VirtualResume\x64\Debug\VirtualResume.exe
   VirtualResume.vcxproj -> E:\Coding\SRTP\VirtualResume\x64\Debug\VirtualResume.pdb (Partial PDB)
